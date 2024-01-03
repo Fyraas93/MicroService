@@ -1,0 +1,144 @@
+<!-- editEvent.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modifier l'événement</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    form {
+      width: 100%;
+      max-width: 400px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-primary {
+      display: block;
+      margin-top: 15px;
+      padding: 15px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-secondary {
+      display: block;
+      margin-top: 15px;
+      padding: 15px;
+      background-color: #6c757d; /* Gray color */
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background-color: #545b62; /* Darker gray on hover */
+    }
+  </style>
+
+  <script th:inline="javascript">
+    function submitForm() {
+      var form = document.getElementById('editForm');
+      form.action = /*[[@{/event/update-event/{eventId}(eventId=${event.id})}]]*/ '';
+      form.method = 'POST';
+
+      var methodInput = document.createElement('input');
+      methodInput.type = 'hidden';
+      methodInput.name = '_method';
+      methodInput.value = 'PUT';
+
+      form.appendChild(methodInput);
+      form.submit();
+    }
+  </script>
+</head>
+<body>
+<h1>Modifier l'événement</h1>
+<form id="editForm" th:action="@{/event/update-event/{eventId}(eventId=${event.id})}" method="post">
+  <input type="hidden" name="_method" th:value="'PUT'" />
+  <input type="hidden" name="id" th:value="${event.id}" />
+  <label for="eventName">Event Name:</label>
+  <input type="text" id="eventName" name="eventName" th:value="${event.eventName}" required />
+  <br/>
+  <label for="eventDateTime">Event Date and Time:</label>
+  <input type="datetime-local" id="eventDateTime" name="eventDateTime" th:value="${event.eventDateTime}" required />
+  <br/>
+  <!-- Add other form fields as needed -->
+  <br/>
+  <button type="button" onclick="submitForm()">Save Changes</button>
+</form>
+
+<a href="/event/retrieve-all-event" class="btn btn-secondary">Retour à la liste des événements</a>
+</body>
+</html>

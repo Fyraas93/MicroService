@@ -1,0 +1,68 @@
+<!-- viewEvent.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détails de l'événement</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+    }
+
+    h1 {
+      color: #333;
+      margin-top: 20px;
+    }
+
+    .event-details {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    p {
+      margin: 0 0 16px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<div class="event-details">
+  <h1>Détails de l'événement</h1>
+
+  <p><strong>Nom de l'événement:</strong> <span th:text="${event.eventName}"></span></p>
+  <p><strong>Date et heure de l'événement:</strong> <span th:text="${#temporals.format(event.eventDateTime, 'dd-MM-yyyy HH:mm')}"></span></p>
+
+  <a th:href="@{/event/retrieve-all-event}" class="btn btn-primary">Retour à la liste des événements</a>
+</div>
+</body>
+</html>

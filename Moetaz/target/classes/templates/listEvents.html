@@ -1,0 +1,100 @@
+<!-- listEvents.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des événements</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    a, form {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    a:hover, form:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-danger {
+      background-color: #d9534f; /* Rouge Bootstrap */
+      border-color: #d9534f;
+    }
+
+    .btn-danger:hover {
+      background-color: #c9302c; /* Rouge Bootstrap foncé au survol */
+      border-color: #ac2925;
+    }
+  </style>
+</head>
+<body>
+<h1>Liste des événements</h1>
+
+<table border="1">
+  <tr>
+    <th>Nom de l'événement</th>
+    <th>Date et heure de l'événement</th>
+    <th>Actions</th>
+  </tr>
+
+  <tr th:each="event : ${events}">
+    <td th:text="${event.eventName}"></td>
+    <td>
+      <span th:if="${event.eventDateTime != null}" th:text="${#temporals.format(event.eventDateTime, 'dd-MM-yyyy HH:mm')}"></span>
+      <span th:unless="${event.eventDateTime != null}">N/A</span>
+    </td>
+    <td>
+      <a th:href="@{'/event/retrieve-event/' + ${event.id}}" class="btn btn-primary">Voir</a>
+      <a th:href="@{'/event/update-event/' + ${event.id}}" class="btn btn-success">Modifier</a>
+      <form th:action="@{'/event/remove-event/' + ${event.id}}" method="post" style="display: inline-block;">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')">Supprimer</button>
+      </form>
+
+
+    </td>
+  </tr>
+</table>
+
+<br/><br/>
+
+<a th:href="@{/event/add-event}" class="btn btn-primary">Ajouter un événement</a>
+</body>
+</html>
